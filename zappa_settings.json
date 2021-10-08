@@ -1,0 +1,10 @@
+{
+    "dev": {
+        "django_settings": "hw3_ecommerce.settings",
+        "profile_name": "default",
+        "project_name": "hw3-ecommerce",
+        "runtime": "python3.6",
+        "s3_bucket": "zappa-q7wxvz37z",
+        "aws_region" : "us-east-2"
+    }
+}
