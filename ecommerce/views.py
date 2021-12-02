@@ -1,7 +1,5 @@
 from django.http import HttpResponse
 from django.http import Http404
-from django.http import HttpResponseRedirect
-from django.urls import reverse
 from django.shortcuts import render, get_object_or_404
 
 from .models import Product, User, CartItem
@@ -29,13 +27,15 @@ def cart(request, user_id):
     return render(request, 'ecommerce/cart.html', context)
 
 
-def product(request, product_id):
+def product(request, product_id, user_id):
     try:
+        user = User.objects.get(pk=user_id)
         product = Product.objects.get(pk=product_id)
     except Product.DoesNotExist:
         raise Http404("Product does not exist")
     context = {
         'product': product,
+        'user': user
     }
     return render(request, 'ecommerce/detail.html', context)
 
