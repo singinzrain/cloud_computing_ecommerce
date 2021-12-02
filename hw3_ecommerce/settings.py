@@ -11,10 +11,10 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
@@ -25,8 +25,7 @@ SECRET_KEY = 'django-insecure-k6%@s(0zvn466u%g^8imlc(v*#2zk_d6e^)c8zx=zgh$hxn@+)
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'mrr162ws8c.execute-api.us-east-2.amazonaws.com',]
-
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'mrr162ws8c.execute-api.us-east-2.amazonaws.com', ]
 
 # Application definition
 
@@ -71,7 +70,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'hw3_ecommerce.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
@@ -81,7 +79,6 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -101,7 +98,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
@@ -115,7 +111,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
@@ -126,12 +121,18 @@ STATIC_URL = '/static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# S3_BUCKET_NAME = "zappa-q7wxvz37z"
+# STATICFILES_STORAGE = "django_s3_storage.storage.StaticS3Storage"
+# AWS_S3_BUCKET_NAME_STATIC = S3_BUCKET_NAME
+# # serve the static files directly from the specified s3 bucket
+# AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % S3_BUCKET_NAME
+# STATIC_URL = "https://%s/" % AWS_S3_CUSTOM_DOMAIN
+# # if you have configured a custom domain for your static files use:
+# # AWS_S3_PUBLIC_URL_STATIC = "https://static.yourdomain.com/"
 
-S3_BUCKET_NAME = "zappa-q7wxvz37z"
-STATICFILES_STORAGE = "django_s3_storage.storage.StaticS3Storage"
-AWS_S3_BUCKET_NAME_STATIC = S3_BUCKET_NAME
-# serve the static files directly from the specified s3 bucket
-AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % S3_BUCKET_NAME
-STATIC_URL = "https://%s/" % AWS_S3_CUSTOM_DOMAIN
-# if you have configured a custom domain for your static files use:
-#AWS_S3_PUBLIC_URL_STATIC = "https://static.yourdomain.com/"
+# CURRENT_PATH = os.path.abspath(os.path.dirname(__file__).decode('utf-8'))
+# STATIC_URL = '/static/'
+#
+# STATICFILES_DIRS = (
+#     os.path.join(CURRENT_PATH, 'static'),
+# )
