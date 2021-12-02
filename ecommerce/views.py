@@ -15,6 +15,24 @@ def index(request):
     }
     return render(request, 'ecommerce/index.html', context)
 
+def login(request):
+    default_user = User.objects.first()
+
+    context = {
+        # 'product_list': product_list,
+        # 'user': default_user
+    }
+    return render(request, 'ecommerce/login.html', context)
+
+def signup(request):
+    default_user = User.objects.first()
+
+    context = {
+        # 'product_list': product_list,
+        # 'user': default_user
+    }
+    return render(request, 'ecommerce/signup.html', context)
+
 
 def cart(request, user_id):
     user = User.objects.get(pk=user_id)
