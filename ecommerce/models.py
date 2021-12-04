@@ -36,3 +36,10 @@ class Order(models.Model):
     cardname = models.CharField(max_length=50)
     cardnumber = models.CharField(max_length=50)
     expmonth = models.CharField(max_length=500)
+
+
+class OrderItem(models.Model):
+    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, null=True)
+    count = models.IntegerField()
+    total = models.FloatField(null=True)

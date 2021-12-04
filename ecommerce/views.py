@@ -1,12 +1,13 @@
 from django.http import HttpResponse
 from django.http import Http404
 from django.shortcuts import render, get_object_or_404, redirect
+from django.db.models import Sum
 
-from .models import Product, User, CartItem, Order
+from .models import Product, User, CartItem, Order, OrderItem
 
 
 def index(request):
-    product_list = Product.objects.all()
+    product_list = Product.objects.all()[:3]
     default_user = User.objects.first()
 
     context = {
@@ -14,6 +15,17 @@ def index(request):
         'user': default_user
     }
     return render(request, 'ecommerce/index.html', context)
+
+
+def products(request):
+    product_list = Product.objects.all()
+    default_user = User.objects.first()
+
+    context = {
+        'product_list': product_list,
+        'user': default_user
+    }
+    return render(request, 'ecommerce/products.html', context)
 
 
 def login(request):
@@ -110,6 +122,7 @@ def cart_decrease_item_count(request):
 def checkout(request, user_id):
     user = User.objects.get(pk=user_id)
     item_list = CartItem.objects.filter(user=user_id)
+    item_sum = item_list.aggregate(Sum('total'))['total__sum']
 
     if request.method == 'POST' and request.POST:
         order = Order(
@@ -124,10 +137,20 @@ def checkout(request, user_id):
             expmonth=request.POST['expmonth'],
         )
         order.save()
+        for item in item_list:
+            orderItem = OrderItem(
+                order=order,
+                product=item.product,
+                count=item.count,
+                total=item.total,
+            )
+            orderItem.save()
+            item.delete()
         return redirect('/ecommerce')
 
     context = {
         'item_list': item_list,
+        'item_sum': item_sum,
         'product': product,
         'user': user
     }
