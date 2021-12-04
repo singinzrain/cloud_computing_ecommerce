@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+{% include "ecommerce/header.html" %}
+
+<body>
+<div class="container mt-5 mb-5">
+    <div class="d-flex justify-content-center row">
+        <div class="col-md-8">
+            <h4>Summary</h4>
+            {% if item_list %}
+                {% for item in item_list %}
+                    <div class="d-flex flex-row justify-content-between align-items-center p-2 bg-white mt-4 px-3 rounded">
+                        <div class="mr-1"><img class="rounded" src="https://picsum.photos/seed/picsum/300/300"
+                                               width="70"></div>
+                        <div class="d-flex flex-column align-items-center product-details"><span
+                                class="font-weight-bold">{{ item.product.name }}</span>
+                            <div class="d-flex flex-row product-desc">
+                                <div class="color"><span
+                                        class="font-weight-bold">{{ item.product.description }}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex flex-row align-items-center qty">
+                            &nbsp;<h5 class=" text-grey mt-1 mr-1 ml-1">{{ item.count }}</h5>&nbsp;
+                        </div>
+                        <div>
+                            <h5 class=" text-grey">${{ item.total }}</h5>
+                        </div>
+                    </div>
+                {% endfor %}
+                <h4 style="float: right; margin-top:5px">You Total: {{ item_sum }}</h4>
+            {% else %}
+                <p>No items are added.</p>
+            {% endif %}
+        </div>
+
+        <form class="col-md-8" method="post">
+            <h4 style="margin-top:40px">Shipping Details</h4>
+            <label class="form-label mt-3" for="fname"><i class="fa fa-user"></i> Full Name</label>
+            <input class="form-control" type="text" id="fname" name="firstname" placeholder="Bob M.">
+            <label class="form-label mt-3" for="email"><i class="fa fa-envelope"></i> Email</label>
+            <input class="form-control" type="text" id="email" name="email" placeholder="Bob@example.com">
+            <label class="form-label mt-3" for="adr"><i class="fa fa-address-card-o"></i> Address</label>
+            <input class="form-control" type="text" id="adr" name="address" placeholder="6th Street">
+            <label class="form-label mt-3" for="city"><i class="fa fa-institution"></i> City</label>
+            <input class="form-control" type="text" id="city" name="city" placeholder="San Jose">
+            <label class="form-label mt-3" for="state">State</label>
+            <input class="form-control" type="text" id="state" name="state" placeholder="CA">
+            <label class="form-label mt-3" for="zip">Zip</label>
+            <input class="form-control" type="text" id="zip" name="zip" placeholder="95112">
+
+            <h4 class="mt-5">Payment Information</h4>
+            <label class="form-label mt-3" for="cname">Name on Card</label>
+            <input class="form-control" type="text" id="cname" name="cardname" placeholder="Bob M.">
+            <label class="form-label mt-3" for="ccnum">Credit card number</label>
+            <input class="form-control" type="text" id="ccnum" name="cardnumber" placeholder="1111-2222-3333-4444">
+            <label class="form-label mt-3" for="expmonth">Exp Month</label>
+            <input class="form-control" type="text" id="expmonth" name="expmonth" placeholder="September">
+
+            <button class="btn btn-primary mt-4" type="submit">Checkout</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>
