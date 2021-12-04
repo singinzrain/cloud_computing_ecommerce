@@ -25,3 +25,14 @@ class CartItem(models.Model):
     count = models.IntegerField()
     total = models.FloatField(null=True)
 
+
+class Order(models.Model):
+    firstname = models.CharField(max_length=50)
+    email = models.CharField(max_length=50)
+    address = models.CharField(max_length=50)
+    city = models.CharField(max_length=50)
+    state = models.CharField(max_length=50)
+    zip = models.CharField(max_length=50)
+    cardname = models.CharField(max_length=50)
+    cardnumber = models.CharField(max_length=50)
+    expmonth = models.CharField(max_length=500)

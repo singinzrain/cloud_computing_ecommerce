@@ -1,8 +1,8 @@
 from django.http import HttpResponse
 from django.http import Http404
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 
-from .models import Product, User, CartItem
+from .models import Product, User, CartItem, Order
 
 
 def index(request):
@@ -15,6 +15,7 @@ def index(request):
     }
     return render(request, 'ecommerce/index.html', context)
 
+
 def login(request):
     default_user = User.objects.first()
 
@@ -23,6 +24,7 @@ def login(request):
         # 'user': default_user
     }
     return render(request, 'ecommerce/login.html', context)
+
 
 def signup(request):
     default_user = User.objects.first()
@@ -103,3 +105,30 @@ def cart_decrease_item_count(request):
         cart_item.total = cart_item.product.price * cart_item.count
         cart_item.save()
     return HttpResponse('Success')
+
+
+def checkout(request, user_id):
+    user = User.objects.get(pk=user_id)
+    item_list = CartItem.objects.filter(user=user_id)
+
+    if request.method == 'POST' and request.POST:
+        order = Order(
+            firstname=request.POST['firstname'],
+            email=request.POST['email'],
+            address=request.POST['address'],
+            city=request.POST['city'],
+            state=request.POST['state'],
+            zip=request.POST['zip'],
+            cardname=request.POST['cardname'],
+            cardnumber=request.POST['cardnumber'],
+            expmonth=request.POST['expmonth'],
+        )
+        order.save()
+        return redirect('/ecommerce')
+
+    context = {
+        'item_list': item_list,
+        'product': product,
+        'user': user
+    }
+    return render(request, 'ecommerce/checkout.html', context)
