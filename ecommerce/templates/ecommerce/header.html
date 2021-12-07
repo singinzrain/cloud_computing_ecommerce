@@ -14,13 +14,15 @@
 
             <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                 <li><a href="{% url 'index' %}" class="nav-link px-2 link-secondary">Home</a></li>
-                {% if user.id != null %}
-                    <li><a href="{% url 'cart' user.id %}" class="nav-link px-2 link-dark">Shopping Cart</a></li>
-                {% endif %}
+                    <li><a href="{% url 'cart' %}" class="nav-link px-2 link-dark">Shopping Cart</a></li>
             </ul>
 
             <div class="text-end">
-                <a href="#" class="nav-link px-2 link-secondary">Current User: {{ user.username }}</a>
+                {% if user.id == null %}
+                    <a href="{% url 'login' %}"><button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button></a>
+                {% else %}
+                    <a href="#" class="nav-link px-2 link-secondary">Current User: {{ user.username }}</a>
+                {% endif %}
             </div>
         </div>
     </div>

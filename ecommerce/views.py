@@ -5,28 +5,35 @@ from django.shortcuts import render, get_object_or_404
 from .models import Product, User, CartItem
 
 
+def get_current_user(request):
+    try:
+        user_id = request.session['user_id']
+        user = User.objects.get(pk=user_id)
+    except KeyError:
+        default_user = User.objects.first()
+        user = default_user
+    return user
+
+
 def index(request):
     product_list = Product.objects.all()
-    default_user = User.objects.first()
 
     context = {
         'product_list': product_list,
-        'user': default_user
+        # 'user': default_user
     }
     return render(request, 'ecommerce/index.html', context)
 
-def login(request):
-    default_user = User.objects.first()
 
+def login(request):
     context = {
         # 'product_list': product_list,
         # 'user': default_user
     }
     return render(request, 'ecommerce/login.html', context)
 
-def signup(request):
-    default_user = User.objects.first()
 
+def signup(request):
     context = {
         # 'product_list': product_list,
         # 'user': default_user
@@ -34,9 +41,10 @@ def signup(request):
     return render(request, 'ecommerce/signup.html', context)
 
 
-def cart(request, user_id):
-    user = User.objects.get(pk=user_id)
-    item_list = CartItem.objects.filter(user=user_id)
+def cart(request):
+    user = get_current_user(request)
+
+    item_list = CartItem.objects.filter(user=user.id)
 
     context = {
         'item_list': item_list,
@@ -45,21 +53,20 @@ def cart(request, user_id):
     return render(request, 'ecommerce/cart.html', context)
 
 
-def product(request, product_id, user_id):
+def product(request, product_id):
     try:
-        user = User.objects.get(pk=user_id)
         product = Product.objects.get(pk=product_id)
     except Product.DoesNotExist:
         raise Http404("Product does not exist")
     context = {
         'product': product,
-        'user': user
     }
     return render(request, 'ecommerce/detail.html', context)
 
 
 def add_to_cart(request):
-    user_id = request.POST['user_id']
+    user = get_current_user(request)
+    user_id = user.id
     product_id = request.POST['product_id']
     user = get_object_or_404(User, pk=user_id)
     cart_item = CartItem.objects.filter(user=user, product_id=product_id).first()
