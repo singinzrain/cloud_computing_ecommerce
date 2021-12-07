@@ -1,8 +1,9 @@
 from django.http import HttpResponse
 from django.http import Http404
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
+from django.db.models import Sum
 
-from .models import Product, User, CartItem
+from .models import Product, User, CartItem, Order, OrderItem
 
 
 def get_current_user(request):
@@ -23,6 +24,18 @@ def index(request):
         # 'user': default_user
     }
     return render(request, 'ecommerce/index.html', context)
+
+
+
+def products(request):
+    product_list = Product.objects.all()
+    default_user = User.objects.first()
+
+    context = {
+        'product_list': product_list,
+        'user': default_user
+    }
+    return render(request, 'ecommerce/products.html', context)
 
 
 def login(request):
@@ -110,3 +123,44 @@ def cart_decrease_item_count(request):
         cart_item.total = cart_item.product.price * cart_item.count
         cart_item.save()
     return HttpResponse('Success')
+
+
+def checkout(request, user_id):
+    user = User.objects.get(pk=user_id)
+    item_list = CartItem.objects.filter(user=user_id)
+    item_sum = item_list.aggregate(Sum('total'))['total__sum']
+
+    if request.method == 'POST' and request.POST:
+        order = Order(
+            firstname=request.POST['firstname'],
+            email=request.POST['email'],
+            address=request.POST['address'],
+            city=request.POST['city'],
+            state=request.POST['state'],
+            zip=request.POST['zip'],
+            cardname=request.POST['cardname'],
+            cardnumber=request.POST['cardnumber'],
+            expmonth=request.POST['expmonth'],
+        )
+        order.save()
+        for item in item_list:
+            orderItem = OrderItem(
+                order=order,
+                product=item.product,
+                count=item.count,
+                total=item.total,
+            )
+            orderItem.save()
+            item.delete()
+        return redirect('/ecommerce')
+
+    context = {
+        'item_list': item_list,
+        'item_sum': item_sum,
+        'product': product,
+        'user': user
+    }
+    return render(request, 'ecommerce/checkout.html', context)
+
+def orders(request):
+    return render(request, 'ecommerce/orders.html', {})

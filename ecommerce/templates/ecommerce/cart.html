@@ -3,7 +3,6 @@
 {% include "ecommerce/header.html" %}
 
 <body>
-
 <div class="container mt-5 mb-5">
     <div class="d-flex justify-content-center row">
         <div class="col-md-8">
@@ -38,14 +37,12 @@
                              product-id="{{ item.product.id }}"><i class="fa fa-trash mb-1 text-danger"></i></div>
                     </div>
                 {% endfor %}
+                <div class="d-flex flex-row align-items-center mt-3 p-2 bg-white rounded">
+                    <a class="btn btn-primary" type="button" href="{% url 'checkout' user.id %}">Proceed to Pay</a>
+                </div>
             {% else %}
-                <p>No items are added.</p>
+                <p style="margin-left: 10px">No items are added.</p>
             {% endif %}
-
-
-            <div class="d-flex flex-row align-items-center mt-3 p-2 bg-white rounded">
-                <button class="btn btn-primary" type="button">Proceed to Pay</button>
-            </div>
         </div>
     </div>
 </div>

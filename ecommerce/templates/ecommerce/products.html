@@ -2,10 +2,9 @@
 <body>
 <div class="album py-5 bg-light">
     <div class="container">
-        <h3 style="text-align: center; font-family: 'Brush Script MT', cursive;">Shopping With US</h3>
-        <img style="max-width: 100%; height: 100%; object-fit: cover;" src="/static/ecommerce/images/main_pic.jpeg"/>
-        <h3 style="margin-top: 40px; font-family: 'Brush Script MT', cursive; text-align: center;">Top Picks</h3>
+        <h3>Products</h3>
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+
             {% if product_list %}
                 {% for product in product_list %}
                     <div class="col">
@@ -14,13 +13,13 @@
 
                             <div class="card-body">
                                 <p class="card-text">
-                                <h5><a href="{% url 'product' product.id %}">{{ product.name }}</a></h5>
+                                <h5><a href="{% url 'product' product.id user.id %}">{{ product.name }}</a></h5>
                                 <p>{{ product.description }}</p>
                                 </p>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="btn-group">
                                         <button type="button" class="add-to-cart btn btn-sm btn-outline-primary"
-                                                product-id="{{ product.id }}">
+                                                user-id="{{ user.id }}" product-id="{{ product.id }}">
                                             Add to cart
                                         </button>
                                     </div>
