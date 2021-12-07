@@ -21,7 +21,11 @@
             </ul>
 
             <div class="text-end">
-                <a href="#" class="nav-link px-2 link-secondary">Current User: {{ user.username }}</a>
+                {% if user.id == null %}
+                    <a href="{% url 'login' %}"><button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button></a>
+                {% else %}
+                    <a href="#" class="nav-link px-2 link-secondary">Current User: {{ user.username }}</a>
+                {% endif %}
             </div>
         </div>
     </div>
