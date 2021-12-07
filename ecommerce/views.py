@@ -155,3 +155,6 @@ def checkout(request, user_id):
         'user': user
     }
     return render(request, 'ecommerce/checkout.html', context)
+
+def orders(request):
+    return render(request, 'ecommerce/orders.html', {})
