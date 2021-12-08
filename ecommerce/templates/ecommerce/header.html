@@ -22,11 +22,30 @@
 
             <div class="text-end">
                 {% if user.id == null %}
-                    <a href="{% url 'login' %}"><button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button></a>
+                    <a href="{% url 'login' %}">
+                        <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
+                    </a>
                 {% else %}
-                    <a href="#" class="nav-link px-2 link-secondary">Current User: {{ user.username }}</a>
+                    <a href="#" class="nav-link px-2 link-secondary">Current User: {{ user.username }}&nbsp;&nbsp;<button
+                            class="btn-sm btn btn-outline-info sign-out" type="submit">Sign Out
+                    </button>
+                    </a>
                 {% endif %}
             </div>
         </div>
     </div>
+    <script type="text/javascript">
+        $('.sign-out').click(function () {
+            let csrftoken = '{{ csrf_token }}'
+            $.ajax(
+                {
+                    type: "POST",
+                    headers: {'X-CSRFToken': csrftoken},
+                    url: "/ecommerce/sign_out",
+                    success: function (data) {
+                        location.reload();
+                    }
+                })
+        });
+    </script>
 </header>

@@ -34,6 +34,7 @@ def products(request):
 
     context = {
         'product_list': product_list,
+        'user': get_current_user(request)
     }
     return render(request, 'ecommerce/products.html', context)
 
@@ -55,6 +56,11 @@ def log_in(request):
         return redirect("/ecommerce")
     else:
         return render(request, 'ecommerce/login.html', {"error": "Wrong password."})
+
+
+def sign_out(request):
+    del request.session['user_id']
+    return redirect("/ecommerce")
 
 
 def signup_page(request):

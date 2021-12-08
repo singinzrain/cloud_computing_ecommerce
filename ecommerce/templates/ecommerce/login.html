@@ -59,12 +59,12 @@
 <body class="text-center">
 
 <main class="form-signin">
-    <p>Welcome to eCommerce!</p>
+    <p>Welcome to InstaShop!</p>
 
     <form action="/ecommerce/log_in" method="post">
         <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
 
-        <a> {{ error }}</a>
+        <p class="text-danger">{{ error}}</p>
         <div class="form-floating">
             <input type="username" class="form-control" name="username" id="username" placeholder="Username">
             <label for="floatingInput">Username</label>
@@ -75,9 +75,9 @@
         </div>
 
         <div class="checkbox mb-3">
-            <label>
-                <input type="checkbox" value="remember-me"> Remember me
-            </label>
+{#            <label>#}
+{#                <input type="checkbox" value="remember-me"> Remember me#}
+{#            </label>#}
         </div>
         <button class="w-100 btn btn-lg btn-primary log-in" type="submit">Sign in</button>
         <div>
