@@ -28,7 +28,7 @@
                 <p><a href="{% url 'index' %}">Home</a></p>
                 <p><a href="{% url 'products' %}">Products</a></p>
                  {% if user.id != null %}
-                    <p><a href="{% url 'cart' user.id %}">Shopping Cart</a></p>
+                    <p><a href="{% url 'cart' %}">Shopping Cart</a></p>
                 {% endif %}
             </div>
         </div>
