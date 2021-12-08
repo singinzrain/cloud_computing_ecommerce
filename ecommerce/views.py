@@ -19,7 +19,7 @@ def get_current_user(request):
 
 
 def index(request):
-    product_list = Product.objects.all()
+    product_list = Product.objects.all()[:3]
 
     user = get_current_user(request)
     context = {
@@ -84,7 +84,6 @@ def create_user(request):
 
 def cart(request):
     user = get_current_user(request)
-
     item_list = CartItem.objects.filter(user=user.id)
 
     context = {
