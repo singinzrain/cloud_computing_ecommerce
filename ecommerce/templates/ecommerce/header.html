@@ -15,8 +15,8 @@
             <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                 <li><a href="{% url 'index' %}" class="nav-link px-2 link-dark">Home</a></li>
                 <li><a href="{% url 'products' %}" class="nav-link px-2 link-dark">Products</a></li>
-                {% if user.id != null %}
-                    <li><a href="{% url 'cart' user.id %}" class="nav-link px-2 link-dark">Shopping Cart</a></li>
+                {% if user != null and user.id != null %}
+                    <li><a href="{% url 'cart' %}" class="nav-link px-2 link-dark">Shopping Cart</a></li>
                 {% endif %}
             </ul>
 

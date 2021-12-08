@@ -13,7 +13,7 @@
 
                             <div class="card-body">
                                 <p class="card-text">
-                                <h5><a href="{% url 'product' product.id user.id %}">{{ product.name }}</a></h5>
+                                <h5><a href="{% url 'product' product.id %}">{{ product.name }}</a></h5>
                                 <p>{{ product.description }}</p>
                                 </p>
                                 <div class="d-flex justify-content-between align-items-center">
@@ -43,6 +43,10 @@
     $('.add-to-cart').click(function () {
         let csrftoken = '{{ csrf_token }}'
         var user_id = $(this).attr("user-id");
+        if (!user_id || user_id == "None") {
+            alert("Please sign in.")
+            return;
+        }
         var product_id = $(this).attr("product-id");
         $.ajax(
             {

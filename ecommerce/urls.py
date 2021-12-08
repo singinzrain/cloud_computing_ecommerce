@@ -4,9 +4,10 @@ from . import views
 
 urlpatterns = [
     path('', views.index, name='index'),
-    path('login', views.login, name='login'),
-    path('signup', views.signup, name='signup'),
-    path('cart', views.cart, name='cart'),
+    path('login', views.login_page, name='login'),
+    path('log_in', views.log_in, name='log_in'),
+    path('signup', views.signup_page, name='signup'),
+    path('create_user', views.create_user, name='create_user'),
     path('product/<int:product_id>', views.product, name='product'),
     path('add_to_cart', views.add_to_cart, name='add_to_cart'),
     path('cart_delete_item', views.cart_delete_item, name='cart_delete_item'),

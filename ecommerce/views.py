@@ -2,6 +2,7 @@ from django.http import HttpResponse
 from django.http import Http404
 from django.shortcuts import render, get_object_or_404, redirect
 from django.db.models import Sum
+import json
 
 from .models import Product, User, CartItem, Order, OrderItem
 
@@ -10,48 +11,69 @@ def get_current_user(request):
     try:
         user_id = request.session['user_id']
         user = User.objects.get(pk=user_id)
+        return user
     except KeyError:
-        default_user = User.objects.first()
-        user = default_user
-    return user
+        # default_user = User.objects.first()
+        # user = default_user
+        return None
 
 
 def index(request):
     product_list = Product.objects.all()
 
+    user = get_current_user(request)
     context = {
         'product_list': product_list,
-        # 'user': default_user
+        'user': user
     }
     return render(request, 'ecommerce/index.html', context)
 
 
-
 def products(request):
     product_list = Product.objects.all()
-    default_user = User.objects.first()
 
     context = {
         'product_list': product_list,
-        'user': default_user
     }
     return render(request, 'ecommerce/products.html', context)
 
 
-def login(request):
-    context = {
-        # 'product_list': product_list,
-        # 'user': default_user
-    }
-    return render(request, 'ecommerce/login.html', context)
+def login_page(request):
+    return render(request, 'ecommerce/login.html')
 
 
-def signup(request):
-    context = {
-        # 'product_list': product_list,
-        # 'user': default_user
-    }
-    return render(request, 'ecommerce/signup.html', context)
+def log_in(request):
+    username = request.POST['username']
+    password = request.POST['password']
+    try:
+        user = User.objects.get(username=username)
+    except User.DoesNotExist:
+        return render(request, 'ecommerce/login.html', {"error": "User doesn't exist."})
+
+    if user.password == password:
+        request.session['user_id'] = user.id
+        return redirect("/ecommerce")
+    else:
+        return render(request, 'ecommerce/login.html', {"error": "Wrong password."})
+
+
+def signup_page(request):
+    return render(request, 'ecommerce/signup.html')
+
+
+def create_user(request):
+    username = request.POST['username']
+    password = request.POST['password']
+    confirm_password = request.POST['confirm-password']
+    if password != confirm_password:
+        return render(request, 'ecommerce/signup.html', {"error": "The password confirmation does not match."})
+
+    try:
+        User.objects.get(username=username)
+        return render(request, 'ecommerce/signup.html', {"error": "Username already exists. Please try again."})
+    except User.DoesNotExist:
+        User.objects.create(username=username, password=password)
+        return login_page(request)
 
 
 def cart(request):
@@ -161,6 +183,7 @@ def checkout(request, user_id):
         'user': user
     }
     return render(request, 'ecommerce/checkout.html', context)
+
 
 def orders(request):
     return render(request, 'ecommerce/orders.html', {})
