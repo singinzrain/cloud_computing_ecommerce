@@ -59,11 +59,11 @@
 <body class="text-center">
 
 <main class="form-signin">
-    <p class="signal">Welcome to eCommerce!</p>
+    <p class="signal">Welcome to InstaShop!</p>
 
     <form action="/ecommerce/create_user" method="post">
         <h1 class="h3 mb-3 fw-normal">Please sign up</h1>
-        <a> {{ error }}</a>
+        <p class="text-danger">{{ error}}</p>
         <div class="form-floating">
             <input type="username" class="form-control" id="username" name="username" placeholder="Username">
             <label for="floatingInput">Username</label>
