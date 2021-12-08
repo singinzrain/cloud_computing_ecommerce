@@ -43,7 +43,11 @@
                     headers: {'X-CSRFToken': csrftoken},
                     url: "/ecommerce/sign_out",
                     success: function (data) {
-                        location.reload();
+                        if (location.pathname.includes("cart") || location.pathname.includes("checkout")) {
+                            location.replace("/ecommerce");
+                        } else {
+                             location.reload();
+                        }
                     }
                 })
         });
