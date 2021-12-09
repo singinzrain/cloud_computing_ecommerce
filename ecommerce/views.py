@@ -94,12 +94,14 @@ def cart(request):
 
 
 def product(request, product_id):
+    user = get_current_user(request)
     try:
         product = Product.objects.get(pk=product_id)
     except Product.DoesNotExist:
         raise Http404("Product does not exist")
     context = {
         'product': product,
+        'user': user
     }
     return render(request, 'ecommerce/detail.html', context)
 
