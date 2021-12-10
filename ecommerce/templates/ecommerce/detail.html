@@ -3,8 +3,9 @@
 {% include "ecommerce/header.html" %}
 <body>
 <div class="d-flex justify-content-center container mt-5">
+  {% if product.name == "Kindle" %}
     <div class="card p-3 bg-white"><i class="fa"></i>
-        <div class="about-product text-center mt-2"><img src="https://picsum.photos/seed/picsum/600/400" width="300">
+        <div class="about-product text-center mt-2"><img src="/static/ecommerce/images/kindle.jpg" width="300">
             <div>
                 <h4>{{ product.name }}</h4>
                 <h6 class="mt-0 text-black-50">{{ product.description }}</h6>
@@ -15,24 +16,144 @@
         </div>
         <div class="d-flex justify-content-between total font-weight-bold mt-4"><span>Total</span><span>${{ product.price }}</span></div>
     </div>
+  {% elif product.name == "Echo" %}
+    <div class="card p-3 bg-white"><i class="fa"></i>
+        <div class="about-product text-center mt-2"><img src="/static/ecommerce/images/echo.jpeg" width="300">
+            <div>
+                <h4>{{ product.name }}</h4>
+                <h6 class="mt-0 text-black-50">{{ product.description }}</h6>
+            </div>
+        </div>
+        <div class="stats mt-2">
+            <div class="d-flex justify-content-between p-price"><span>Price</span><span>${{ product.price }}</span></div>
+        </div>
+        <div class="d-flex justify-content-between total font-weight-bold mt-4"><span>Total</span><span>${{ product.price }}</span></div>
+    </div>
+
+  {% elif product.name == "Watch" %}
+    <div class="card p-3 bg-white"><i class="fa"></i>
+        <div class="about-product text-center mt-2"><img src="/static/ecommerce/images/watch.jpeg" width="300">
+            <div>
+                <h4>{{ product.name }}</h4>
+                <h6 class="mt-0 text-black-50">{{ product.description }}</h6>
+            </div>
+        </div>
+        <div class="stats mt-2">
+            <div class="d-flex justify-content-between p-price"><span>Price</span><span>${{ product.price }}</span></div>
+        </div>
+        <div class="d-flex justify-content-between total font-weight-bold mt-4"><span>Total</span><span>${{ product.price }}</span></div>
+    </div>
+
+
+  {% elif product.name == "Artificial Tree" %}
+    <div class="card p-3 bg-white"><i class="fa"></i>
+        <div class="about-product text-center mt-2"><img src="/static/ecommerce/images/tree.jpg" width="300">
+            <div>
+                <h4>{{ product.name }}</h4>
+                <h6 class="mt-0 text-black-50">{{ product.description }}</h6>
+            </div>
+        </div>
+        <div class="stats mt-2">
+            <div class="d-flex justify-content-between p-price"><span>Price</span><span>${{ product.price }}</span></div>
+        </div>
+        <div class="d-flex justify-content-between total font-weight-bold mt-4"><span>Total</span><span>${{ product.price }}</span></div>
+    </div>
+
+  {% else %}
+    <div class="card p-3 bg-white"><i class="fa"></i>
+        <div class="about-product text-center mt-2"><img src="/static/ecommerce/images/null.jpg" width="300">
+            <div>
+                <h4>{{ product.name }}</h4>
+                <h6 class="mt-0 text-black-50">{{ product.description }}</h6>
+            </div>
+        </div>
+        <div class="stats mt-2">
+            <div class="d-flex justify-content-between p-price"><span>Price</span><span>${{ product.price }}</span></div>
+        </div>
+        <div class="d-flex justify-content-between total font-weight-bold mt-4"><span>Total</span><span>${{ product.price }}</span></div>
+    </div>
+   
+  {% endif %}
 </div>
 <div class="container px-4 py-5" id="featured-3">
-    <h2 class="pb-2 border-bottom">Reivews</h2>
+  {% if product.name == "Kindle" %}
+    <h2 class="pb-2 border-bottom">Your story stars here</h2>
     <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
       <div class="feature col">
-        <h2>"Best stuff"</h2>
-        <p>Paragraph of text beneath the heading to explain the heading. We'll add onto it with another sentence and probably just keep going until we run out of words.</p>
+        <h2>"Go beyond a book"</h2>
+        <p>Holds thousands of books
+          <br>Fast downloads</br>
+          At-a-tap controls
+        </p>
       </div>
       <div class="feature col">
-        <h2>"Makes my life easier"</h2>
-        <p>Paragraph of text beneath the heading to explain the heading. We'll add onto it with another sentence and probably just keep going until we run out of words.</p>
+        <h2>"Massive selection"</h2>
+        <p>Finding new stories has never been easier with kindle. Enjoy access to Kindle Exclusive titles you won't find anywhere else.</p>
 
       </div>
       <div class="feature col">
         <h2>"Love it!!!"</h2>
-        <p>Paragraph of text beneath the heading to explain the heading. We'll add onto it with another sentence and probably just keep going until we run out of words.</p>
+        <p>Changing life is not an exaggeration. Books are friends. Love the way they look! Love the way they feel! Love the way they smell!</p>
       </div>
     </div>
-  </div>
+  {% elif product.name == "Echo" %}
+    <h2 class="pb-2 border-bottom">Meet Echo</h2>
+    <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
+      <div class="feature col">
+        <h2>"Alexa, play top hits"</h2>
+        <p>Echo combines premium sound, a built-in Zigbee smart home hub, and a temperature sensor. Powerful speakers deliver clear highs, dynamic mids, and deep bass for rich, detailed sound that adapts to any room.</p>
+      </div>
+      <div class="feature col">
+        <h2>"Designed to protect your privacy"</h2>
+        <p>Alexa and Echo devices are built with multiple layers of privacy protection. Echo smart speakers have a microphone off button that electronically disconnects the microphones. You also have control over your voice recordings and can view, hear, or delete them at any time.</p>
+
+      </div>
+      <div class="feature col">
+        <h2>"Alexa is happy to help!"</h2>
+        <p>Make your life easier at home. Set timers, ask questions, add items to lists, and create calendar events and reminders. Check the traffic and weather, or play the news.</p>
+      </div>
+    </div>
+
+  {% elif product.name == "Watch" %}
+    <h2 class="pb-2 border-bottom">The ultimate device for life</h2>
+    <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
+      <div class="feature col">
+        <h2>"Full screen ahead"</h2>
+        <p>Apple Watch can do what your other devices can't because it's on your wrist. When you wear it, you get a fitness partner that measures all the ways you move, meaningful health insights, and a connection to the people and things you care about most.</p>
+      </div>
+      <div class="feature col">
+        <h2>"Track all the ways you're active"</h2>
+        <p>Activity rings show your daily activity. Make it your goal to close them every day. To keep you motivated there are awards, personalized coaching, and Activity competitions.</p>
+
+      </div>
+      <div class="feature col">
+        <h2>"Stay in touch with just a tap"</h2>
+        <p>Text, make calls, and listen to music with ease. And with available cellular, you can do it all without your phone.9 It makes leaving your phone behind something you can do on purpose.</p>
+      </div>
+    </div>
+
+  {% elif product.name == "Artificial Tree" %}
+    <h2 class="pb-2 border-bottom">Not just a tree</h2>
+    <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
+      <div class="feature col">
+        <h2>"The Wonderful World Of Disney Christmas Tree"</h2>
+        <p>Over 75 of your favorite Disney friends, including Mickey, Cinderella, Pooh and more! 10 scenes, 20 LED lights, 4 tiers of movement and music.</p>
+      </div>
+      <div class="feature col">
+        <h2>"Thomas Kinkade Wonderland Express Christmas Tree"</h2>
+        <p>Market FIRST! Tabletop tree with 12 illuminated buildings, moving trains and Santa and sleigh tree topper, a medley of 8 Christmas carols and more.</p>
+
+      </div>
+      <div class="feature col">
+        <h2>"HARRY POTTER HOGWARTS Tabletop Tree"</h2>
+        <p>Officially licensed! Features flickering flameless candles and handcrafted golden metallic adornments. Plays music from first HARRY POTTER™ film.</p>
+      </div>
+    </div>
+
+  {% else %}
+    <h2 class="pb-2 border-bottom">No descriptions yet</h2>
+
+  {% endif %}
+</div>
 </body>
 </html>

@@ -15,14 +15,42 @@
             <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                 <li><a href="{% url 'index' %}" class="nav-link px-2 link-dark">Home</a></li>
                 <li><a href="{% url 'products' %}" class="nav-link px-2 link-dark">Products</a></li>
-                {% if user.id != null %}
-                    <li><a href="{% url 'cart' user.id %}" class="nav-link px-2 link-dark">Shopping Cart</a></li>
+                {% if user != null and user.id != null %}
+                    <li><a href="{% url 'cart' %}" class="nav-link px-2 link-dark">Shopping Cart</a></li>
+                    <li><a href="{% url 'orders' %}" class="nav-link px-2 link-dark">Orders</a></li>
                 {% endif %}
             </ul>
 
             <div class="text-end">
-                <a href="#" class="nav-link px-2 link-secondary">Current User: {{ user.username }}</a>
+                {% if user.id == null %}
+                    <a href="{% url 'login' %}">
+                        <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
+                    </a>
+                {% else %}
+                    <a href="#" class="nav-link px-2 link-secondary">Current User: {{ user.username }}&nbsp;&nbsp;<button
+                            class="btn-sm btn btn-outline-info sign-out" type="submit">Sign Out
+                    </button>
+                    </a>
+                {% endif %}
             </div>
         </div>
     </div>
+    <script type="text/javascript">
+        $('.sign-out').click(function () {
+            let csrftoken = '{{ csrf_token }}'
+            $.ajax(
+                {
+                    type: "POST",
+                    headers: {'X-CSRFToken': csrftoken},
+                    url: "/ecommerce/sign_out",
+                    success: function (data) {
+                        if (location.pathname.includes("cart") || location.pathname.includes("checkout") || location.pathname.includes("orders")) {
+                            location.replace("/ecommerce");
+                        } else {
+                             location.reload();
+                        }
+                    }
+                })
+        });
+    </script>
 </header>

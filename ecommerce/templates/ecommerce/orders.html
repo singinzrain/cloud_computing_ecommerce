@@ -1,4 +1,4 @@
-<html>
+
 {% include "ecommerce/header.html" %} 
 
 <body>
@@ -18,39 +18,41 @@
                                 <th class="date-column sorting_desc" tabindex="0" rowspan="1" colspan="1" aria-sort="descending" aria-label="Order Date/Time: activate to sort column ascending" style="width: 292px;">Order Date/Time</th>
                                 <th class="number-column sorting" tabindex="0" rowspan="1" colspan="1" aria-label="Order Number: activate to sort column descending" style="width: 195px;">Order Number</th>
                                 <th class="total-column sorting" tabindex="0" rowspan="1" colspan="1" aria-label="Order Total: activate to sort column descending" style="width: 161px;">Order Total</th>
-                                <th class="status-column sorting" tabindex="0" rowspan="1" colspan="1" aria-label="Status: activate to sort column descending" style="width: 292px;">Status</th>
-                                <th class="mobile-column row-fluid sorting" tabindex="0" rowspan="1" colspan="1" aria-label="Orders: activate to sort column descending" style="width: 46px;">Orders</th>
+                                <th class="status-column sorting" tabindex="0" rowspan="1" colspan="1" aria-label="Status: activate to sort column descending" style="width: 192px;">Status</th>
+                                <th class="detail-column sorting" tabindex="0" rowspan="1" colspan="1" aria-label="Orders: activate to sort column descending" style="width: 146px;">Details</th>
                             </tr>
                         </thead>
-                        <tbody role="alert" aria-live="polite" aria-relevant="all">
-                            <tr class="odd">
-                                <td class="date-column sorting_1">11/25/2021 5:47 PM</td>
-                                <td class="number-column"><a href="ecommerce/orderHistoryDetail/1135954520/">1135954520</a></td>
-                                <td class="total-column">$206.40</td>
-                                <td class="status-column">Preparing Shipment <br>Books: 3 <br>Watch: 2</br> </br></td>
-                                <td class="mobile-column row-fluid">
-                                    <div class="span6"><time>11/25/2021 5:47 PM</time></div>
-                                    <div class="span6 right">Total: $206.40</div>
-                                    <div class="span6"><a href="ecommerce/orderHistoryDetail/1135954520/">1135954520</a></div>
-                                    <div class="span6 right">Preparing Shipment</div>
-                                </td>
-                            </tr>
-                        </tbody>
+                        
+                        {% if order_list %}
+                        {% for orders, details in order_detail.items %}
+                            <tbody role="alert" aria-live="polite" aria-relevant="all">
+                                <tr class="odd">
+                                    <td class="date-column sorting_1"> {{orders.times}} </td>
+                                    <td class="number-column"><a href="ecommerce/orderHistoryDetail/1135954520/"> {{orders.id}} </a></td>
+                                    <td class="total-column"> ${{orders.totals}} </td>
+                                    <td class="status-column"> {{orders.status}} </td>
+                                    <td class="detail-column">
+                                        Products (amount)
+                                        
+                                            {% for detail in details %}   
+                                                <br>{{detail.product.name}}: {{detail.count}} </br>      
+                                            {% endfor %}
+                                       
+                                    </td>
+                                </tr>
+                            </tbody>
+                            {% endfor %}
+                        {% endif %}
+                        
                     </table>
+                    
                     <div class="bottom">
-                        <div class="dataTables_info" id="order_table_info">Showing 1 to 1 of 1 entries</div>
-                        <div class="dataTables_paginate paging_full_numbers" style="display: none;">
-                            <a tabindex="0" class="first paginate_button paginate_button_disabled"> ◄◄ </a>
-                            <a tabindex="0" class="previous paginate_button paginate_button_disabled"> ◄ </a>
-                            <span>
-                                <a tabindex="0" class="paginate_active">1</a>
-                            </span>
-                            <a tabindex="0" class="next paginate_button paginate_button_disabled"> ► </a>
-                            <a tabindex="0" class="last paginate_button paginate_button_disabled" style="display: none;">1</a>
-                        </div>
+                        <div class="dataTables_info" id="order_table_info">Showing 1 to {{ordersNum}} of {{ordersNum}} entries</div>
+
                         <div class="clear"></div>
                     </div>
                 </div>
+            </div>
             
         </div>
     
@@ -59,4 +61,3 @@
 
 </body>
 {% include "ecommerce/footer.html" %}
-</html>
