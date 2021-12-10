@@ -161,6 +161,7 @@ def checkout(request, user_id):
 
     if request.method == 'POST' and request.POST:
         order = Order(
+            user=user,
             firstname=request.POST['firstname'],
             email=request.POST['email'],
             address=request.POST['address'],
@@ -170,6 +171,9 @@ def checkout(request, user_id):
             cardname=request.POST['cardname'],
             cardnumber=request.POST['cardnumber'],
             expmonth=request.POST['expmonth'],
+            totals=request.POST['totals'],
+            times=request.POST['times'],
+            status=request.POST['status'],
         )
         order.save()
         for item in item_list:
@@ -193,4 +197,22 @@ def checkout(request, user_id):
 
 
 def orders(request):
-    return render(request, 'ecommerce/orders.html', {})
+    user = get_current_user(request)
+    order_list = Order.objects.filter(user=user.id)
+    order_detail = {}
+    ordersNum = 0
+
+
+    for orders in order_list:
+        items = OrderItem.objects.filter(order=orders.id)
+        order_detail[orders] = items
+        ordersNum = ordersNum + 1 
+
+
+    context = {
+        'order_list': order_list,
+        'order_detail': order_detail,
+        'ordersNum': ordersNum,
+        'user': user
+    }
+    return render(request, 'ecommerce/orders.html', context)

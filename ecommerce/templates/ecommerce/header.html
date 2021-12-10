@@ -17,6 +17,7 @@
                 <li><a href="{% url 'products' %}" class="nav-link px-2 link-dark">Products</a></li>
                 {% if user != null and user.id != null %}
                     <li><a href="{% url 'cart' %}" class="nav-link px-2 link-dark">Shopping Cart</a></li>
+                    <li><a href="{% url 'orders' %}" class="nav-link px-2 link-dark">Orders</a></li>
                 {% endif %}
             </ul>
 
@@ -43,7 +44,7 @@
                     headers: {'X-CSRFToken': csrftoken},
                     url: "/ecommerce/sign_out",
                     success: function (data) {
-                        if (location.pathname.includes("cart") || location.pathname.includes("checkout")) {
+                        if (location.pathname.includes("cart") || location.pathname.includes("checkout") || location.pathname.includes("orders")) {
                             location.replace("/ecommerce");
                         } else {
                              location.reload();

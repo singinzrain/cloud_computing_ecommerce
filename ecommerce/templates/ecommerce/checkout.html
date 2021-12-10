@@ -49,6 +49,25 @@
             <label class="form-label mt-3" for="zip">Zip</label>
             <input class="form-control" type="text" id="zip" name="zip" placeholder="95112" required>
 
+            <input class="form-control" type="hidden" id="totals" name="totals" value={{ item_sum }}>
+            <input class="form-control" type="hidden" id="status" name="status" value="Preparing Shipment">
+
+            <input class="form-control" type="hidden" name="times" id="times" value="">
+            <script>
+                Date.prototype.format = function (fmt) {
+                    var o = {
+                        "y+": this.getFullYear, //年
+                        "M+": this.getMonth() + 1, //月份
+                        "d+": this.getDate(), //日
+                    };
+                    if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+                    for (var k in o)
+                        if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+                    return fmt;
+                }
+                document.getElementById('times').value = (new Date()).format('yyyy-MM-dd');
+            </script>			
+
             <h4 class="mt-5">Payment Information</h4>
             <label class="form-label mt-3" for="cname">Name on Card</label>
             <input class="form-control" type="text" id="cname" name="cardname" placeholder="Bob M." required>

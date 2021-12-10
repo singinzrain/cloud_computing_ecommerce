@@ -27,6 +27,7 @@ class CartItem(models.Model):
 
 
 class Order(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     firstname = models.CharField(max_length=50)
     email = models.CharField(max_length=50)
     address = models.CharField(max_length=50)
@@ -36,6 +37,9 @@ class Order(models.Model):
     cardname = models.CharField(max_length=50)
     cardnumber = models.CharField(max_length=50)
     expmonth = models.CharField(max_length=500)
+    totals = models.FloatField(null=True)
+    times = models.CharField(max_length=50, null=True)
+    status = models.CharField(max_length=50, null=True)
 
 
 class OrderItem(models.Model):
