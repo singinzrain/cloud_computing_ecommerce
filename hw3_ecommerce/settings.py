@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-k6%@s(0zvn466u%g^8imlc(v*#2zk_d6e^)c8zx=zgh$hxn@+)
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'mrr162ws8c.execute-api.us-east-2.amazonaws.com', ]
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'mrr162ws8c.execute-api.us-east-2.amazonaws.com', 'alb-instashop-221123146.us-east-2.elb.amazonaws.com']
 
 # Application definition
 
